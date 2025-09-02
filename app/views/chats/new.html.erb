@@ -3,7 +3,6 @@
     <div class="col-md-6">
       <div class="card shadow-sm p-4 chat-container">
         <h1 class="h4 mb-4 text-center">Start a new chat</h1>
-
         <%= simple_form_for @chat do |f| %>
           <%= f.association :game, label: "Choose a game" %>
           <div class="text-center mt-3">
