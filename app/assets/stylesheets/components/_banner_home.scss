@@ -1,0 +1,26 @@
+#banner_home {
+  background-image: image-url("Banner_Home.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+#banner_home h1 {
+  color: #fff;
+  font-size: 45px;
+  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
+}
+
+#banner_home h3 {
+  color: #fff;
+  font-size: 30px;
+  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
+}
