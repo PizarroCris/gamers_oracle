@@ -1,0 +1,6 @@
+<h1>Start a new chat</h1>
+
+<%= simple_form_for @chat do |f| %>
+  <%= f.association :game, label: "Choose a game" %>
+  <%= f.button :submit, "Start Chat", class: "btn btn-primary" %>
+<% end %>
