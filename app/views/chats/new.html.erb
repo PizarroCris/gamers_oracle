@@ -1,6 +1,16 @@
-<h1>Start a new chat</h1>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm p-4">
+        <h1 class="h4 mb-4 text-center">Start a new chat</h1>
 
-<%= simple_form_for @chat do |f| %>
-  <%= f.association :game, label: "Choose a game" %>
-  <%= f.button :submit, "Start Chat", class: "btn-brown" %>
-<% end %>
+        <%= simple_form_for @chat do |f| %>
+          <%= f.association :game, label: "Choose a game" %>
+          <div class="text-center mt-3">
+            <%= f.button :submit, "Start Chat", class: "btn btn-brown" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
