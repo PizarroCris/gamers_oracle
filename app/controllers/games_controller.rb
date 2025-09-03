@@ -3,4 +3,10 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @chat = @game.chat
   end
+ 
+  def new
+  end
+
+  def create
+  end
 end
