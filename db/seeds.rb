@@ -1,14 +1,12 @@
 require 'faker'
 require 'open-uri'
 
-# Clean previous seeds
 puts "Cleaning..."
 Message.delete_all
 Chat.delete_all
 Game.delete_all
 User.delete_all
 
-# So registros unicos
 Faker::UniqueGenerator.clear
 
 puts "Seeding users..."
@@ -18,25 +16,22 @@ users = 4.times.map do
 end
 users << admin_user
 
-
 puts "Seeding games..."
-games = 5.times.map do
+5.times do
   image_url = "https://static.photos/gaming/1024x576/#{rand(54..168)}"
-  io = URI.open(image_url)
-   game = Game.create!(name: Faker::Game.unique.title)
+  io = URI.parse(image_url).open
+   game = Game.new(name: Faker::Game.unique.title)
    game.image.attach(
     io: io,
     filename:"game_#{rand(1000)}.jpg",
-    content_type: "image/jpeg"
+    content_type: "image/jpg"
   )
   game.save!
 end
 
-
-
 puts "Seeding chats..."
 chats = users.map do |user|
-   Chat.create!(user: user, game:games.sample)
+   Chat.create!(user: user, game: Game.all.sample)
 end
 
 puts "Seeding messages…"
@@ -51,6 +46,3 @@ chats.map do |chat|
 end
 
 puts "Users: #{User.count}, Games: #{Game.count}, Chats: #{Chat.count}, Messages: #{Message.count}"
-
-
-require "open-uri"
