@@ -1,0 +1,44 @@
+<div class="container mt-5">
+  <div class="card shadow-sm p-4 game-card position-relative">
+
+    <!-- Delete button in top right -->
+    <div class="position-absolute top-0 end-0 m-3">
+      <%= button_to "Delete Chat",
+                    chat_path(@chat),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "btn btn-danger btn-sm" %>
+    </div>
+
+    <h1>Chat #<%= @chat.id %></h1>
+    <p><strong>Game:</strong> <%= @game.name %></p>
+
+    <%= link_to "Back to chats", chats_path, class: "btn btn-secondary mt-3" %>
+
+    <!-- Robot form inside the card -->
+    <hr class="my-4">
+    <h3 class="h5 mb-3">Ask the Robot</h3>
+
+    <%= form_with url: ask_ai_chat_path(@chat), method: :post, local: true do |f| %>
+      <div class="input-group">
+        <%= f.text_field :message, class: "form-control", placeholder: "Ask the AI..." %>
+        <button class="btn btn-primary" type="submit">Send</button>
+      </div>
+    <% end %>
+
+    <!-- Minimal messages list -->
+    <div class="mt-4">
+      <h4 class="h6">Messages</h4>
+      <% if @chat.messages.any? %>
+        <% @chat.messages.order(:created_at).each do |msg| %>
+          <p class="mb-2">
+            <strong><%= message.role.capitalize %>:</strong>
+            <%= message.content %>
+          </p>
+        <% end %>
+      <% else %>
+        <p class="text-muted mb-0">No messages yet. Ask something above.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
