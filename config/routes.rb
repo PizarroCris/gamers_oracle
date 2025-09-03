@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # Chats + AI endpoint
   resources :chats do
     member do
-      post :ask_ai   # -> ask_ai_chat_path(@chat)
+      post :ask_ai
     end
   end
 

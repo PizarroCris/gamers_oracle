@@ -32,8 +32,8 @@
       <% if @chat.messages.any? %>
         <% @chat.messages.order(:created_at).each do |msg| %>
           <p class="mb-2">
-            <strong><%= message.role.capitalize %>:</strong>
-            <%= message.content %>
+            <strong><%= msg.role.capitalize %>:</strong>
+            <%= msg.message %>
           </p>
         <% end %>
       <% else %>

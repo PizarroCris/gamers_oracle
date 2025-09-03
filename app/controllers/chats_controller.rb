@@ -7,7 +7,8 @@ class ChatsController < ApplicationController
   end
 
   def show
-    @game = @chat.game
+    @game     = @chat.game
+    @messages = @chat.messages.order(:created_at)
   end
 
   def new
@@ -28,26 +29,25 @@ class ChatsController < ApplicationController
     redirect_to chats_path, notice: "Chat deleted"
   end
 
+  SYSTEM_PROMPT = "You are a helpful assistant for gamers."
+
   def ask_ai
     user_msg = params[:message].to_s.strip
+    return redirect_to chat_path(@chat), alert: "Type a message first." if user_msg.blank?
 
-    if user_msg.blank?
-      redirect_to chat_path(@chat), alert: "Type a message first." and return
-    end
 
-    # Save user's message
-    @chat.messages.create!(role: "user", content: user_msg)
+    @chat.messages.create!(role: "user", message: user_msg)
 
-    client = RubyLLM::OpenAI.new
-    response = client.chat(
-      messages: build_thread(@chat),   # include history
-      model: "gpt-4o-mini"
-    )
+    chat = RubyLLM.chat
+    response = chat.with_instructions(SYSTEM_PROMPT).ask(user_msg)
 
-    ai_reply = response.dig("choices", 0, "message", "content") || "I couldn't generate a reply."
-    @chat.messages.create!(role: "assistant", content: ai_reply)
+    ai = response.content.presence || "I couldn't generate a reply."
+
+    @chat.messages.create!(role: "assistant", message: ai)
 
     redirect_to chat_path(@chat)
+  rescue RubyLLM::RateLimitError
+    redirect_to chat_path(@chat), alert: "AI quota exceeded. Please try again later."
   rescue => e
     Rails.logger.error("ask_ai error: #{e.class}: #{e.message}")
     redirect_to chat_path(@chat), alert: "Robot error: #{e.message}"
@@ -56,7 +56,6 @@ class ChatsController < ApplicationController
   private
 
   def set_chat
-    # 🔒 ensures users only access their own chat
     @chat = current_user.chats.find(params[:id])
   end
 
@@ -64,10 +63,4 @@ class ChatsController < ApplicationController
     params.require(:chat).permit(:game_id)
   end
 
-  # Build the full conversation as OpenAI messages
-  def build_thread(chat)
-    base = [{ role: "system", content: "You are a helpful assistant for gamers." }]
-    msgs = chat.messages.order(:created_at).pluck(:role, :content).map { |r, c| { role: r, content: c } }
-    base + msgs
-  end
 end
