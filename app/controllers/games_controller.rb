@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def new
-    @games = Game.new
+    @game = Game.new
   end
 
   def create
@@ -13,13 +13,13 @@ class GamesController < ApplicationController
     if @game.save
       redirect_to @game
     else
-      render  :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
   private
 
   def game_params
-    params.require(:name).permit(:name, :image)
+    params.require(:game).permit(:name, :image)
   end
 end
