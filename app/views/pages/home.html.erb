@@ -1,13 +1,9 @@
 <div id="banner_home">
-  <div class="row">
-    <div class="col-6 col-md-8 col-lg-10">
-      <%= link_to "Log In", new_user_session_path, class: "btn-brown m-3" %>
-    </div>
-    <div class="col-6 col-md-4 col-lg-1">
-      <%= link_to "Register", new_user_registration_path, class: "btn-brown m-3" %>
-    </div>
-  </div>
   <div class="overlay">
+    <div class="container hero-buttons">
+      <%= link_to "Log In", new_user_session_path, class: "btn-brown" %>
+      <%= link_to "Register", new_user_registration_path, class: "btn-brown" %>
+    </div>
     <h1>Gamer's Oracle</h1>
     <h3>The Ultimate Game Guru</h3>
   </div>
