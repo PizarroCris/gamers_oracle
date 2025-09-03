@@ -1,0 +1,52 @@
+#banner_home {
+  background-image: image-url("Banner_Home.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: calc(100vh - 56px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+#banner_home .overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 40px 20px;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+#banner_home .overlay .hero-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  margin-bottom: 20px;
+}
+
+#banner_home h1 {
+  color: #fff;
+  font-size: 45px;
+  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
+}
+
+#banner_home h3 {
+  color: #fff;
+  font-size: 30px;
+  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 20px 40px;
+  text-align: center;
+  width: 100%;
+}
+
