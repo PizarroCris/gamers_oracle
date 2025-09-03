@@ -1,4 +1,5 @@
 require 'faker'
+require 'open-uri'
 
 # Clean previous seeds
 puts "Cleaning..."
@@ -20,8 +21,18 @@ users << admin_user
 
 puts "Seeding games..."
 games = 5.times.map do
-   Game.create!(name: Faker::Game.unique.title, image: Faker::LoremFlickr.image(size: "200x400", search_terms: ['games']))
+  image_url = "https://static.photos/gaming/1024x576/#{rand(54..168)}"
+  io = URI.open(image_url)
+   game = Game.create!(name: Faker::Game.unique.title)
+   game.image.attach(
+    io: io,
+    filename:"game_#{rand(1000)}.jpg",
+    content_type: "image/jpeg"
+  )
+  game.save!
 end
+
+
 
 puts "Seeding chats..."
 chats = users.map do |user|
@@ -40,3 +51,6 @@ chats.map do |chat|
 end
 
 puts "Users: #{User.count}, Games: #{Game.count}, Chats: #{Chat.count}, Messages: #{Message.count}"
+
+
+require "open-uri"
