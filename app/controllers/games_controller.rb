@@ -5,7 +5,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @chat = @game.chat
+    # @chat = @game.chat
   end
 
   def new
@@ -28,7 +28,7 @@ class GamesController < ApplicationController
   end
 
   private
-  
+
   def game_params
     params.require(:game).permit(:name, :image)
   end
