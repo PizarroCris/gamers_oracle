@@ -1,0 +1,21 @@
+<div class="container mt-3 d-flex justify-content-end">
+  <%= link_to "Add new game", new_game_path, class: 'btn-brown' %>
+</div>
+
+<div class="bg-new mt-1">
+  <div class="container text-below-banner py-4">
+    <div class="row">
+      <% @games.each do |game| %>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body list-chats d-flex align-items-center justify-content-center">
+              <%= image_tag game.image.key, class: "card-img" %>
+              <%= link_to game.game.name, game_path(game), 
+                  class: "chat-card-text fw-bold text-decoration-none text-center w-100" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
