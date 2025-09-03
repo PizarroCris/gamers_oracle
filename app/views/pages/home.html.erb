@@ -1,8 +1,10 @@
 <div id="banner_home">
   <div class="overlay">
     <div class="container hero-buttons">
-      <%= link_to "Log In", new_user_session_path, class: "btn-brown" %>
-      <%= link_to "Register", new_user_registration_path, class: "btn-brown" %>
+      <% unless user_signed_in? %>
+        <%= link_to "Log In", new_user_session_path, class: "btn-brown" %>
+        <%= link_to "Register", new_user_registration_path, class: "btn-brown" %>
+      <% end %>
     </div>
     <h1>Gamer's Oracle</h1>
     <h3>The Ultimate Game Guru</h3>

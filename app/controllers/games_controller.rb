@@ -5,7 +5,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @chat = @game.chat
+    # @chat = @game.chat
   end
 
   def new
@@ -15,7 +15,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     if @game.save
-      redirect_to @game
+      redirect_to games_path(@game)
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class GamesController < ApplicationController
   end
 
   private
-  
+
   def game_params
     params.require(:game).permit(:name, :image)
   end
