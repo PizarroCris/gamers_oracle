@@ -1,0 +1,15 @@
+<h1><%= @game.name %></h1>
+
+<h3>Chats for this game</h3>
+<% if @chats.any? %>
+  <ul>
+    <% @chats.each do |chat| %>
+      <li><%= link_to "Chat ##{chat.id}", chat_path(chat) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No chats yet for this game.</p>
+<% end %>
+
+<%= link_to "Start a new chat", new_chat_path, class: "btn btn-success" %>
+<%= link_to "Back to Games", games_path, class: "btn btn-secondary" %>
