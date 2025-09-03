@@ -21,8 +21,8 @@
             <i class="fa-solid fa-ellipsis-vertical"></i>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Games", "games", class: "dropdown-item" %>
-              <%= link_to "Chats", "chats", class: "dropdown-item" %>
+              <%= link_to "Games", "../games", class: "dropdown-item" %>
+              <%= link_to "Chats", "../chats", class: "dropdown-item" %>
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>
