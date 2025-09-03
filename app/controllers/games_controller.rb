@@ -13,4 +13,10 @@ class GamesController < ApplicationController
 
   def create
   end
+
+  private
+  
+  def article_params
+    params.require(:game).permit(:name, :image)
+  end
 end
