@@ -78,4 +78,4 @@ gem "devise"
 gem "cloudinary"
 gem "faker"
 gem 'open-uri'
-
+gem "ruby_llm", "~> 1.6.4"
