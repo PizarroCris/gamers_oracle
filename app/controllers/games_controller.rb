@@ -1,10 +1,12 @@
 class GamesController < ApplicationController
+  before_action :set_game, only: [:show, :edit, :update, :destroy]
   def index
     @games = Game.all
   end
 
   def show
     @game = Game.find(params[:id])
+    @chats = @game.chats
     # @chat = @game.chat
   end
 
@@ -21,13 +23,28 @@ class GamesController < ApplicationController
     end
   end
 
-  private
+   def edit
+    @game
+    end
 
-  def game_params
-    params.require(:game).permit(:name, :image)
+  def update
+    if @game.update(game_params)
+      redirect_to @game, notice: "Game updated"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @game.destroy
+    redirect_to games_path, notice: "Game deleted"
   end
 
   private
+
+  def set_game
+    @game = Game.find(params[:id])
+  end
 
   def game_params
     params.require(:game).permit(:name, :image)
