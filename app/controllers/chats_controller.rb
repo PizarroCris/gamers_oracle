@@ -2,6 +2,11 @@ class ChatsController < ApplicationController
   def index
     @chats = Chat.all
   end
+  
+  def show
+    @game = Game.find(params[:id])
+    @chat = @game.chat
+  end
 
   def new
     @chat = Chat.new
