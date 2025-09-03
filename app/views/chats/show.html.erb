@@ -1,0 +1,18 @@
+<div class="container mt-5">
+  <div class="card shadow-sm p-4 game-card position-relative">
+
+    <!-- Delete button in top right -->
+    <div class="position-absolute top-0 end-0 m-3">
+      <%= button_to "Delete Chat",
+                    chat_path(@chat),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "btn btn-danger btn-sm" %>
+    </div>
+
+    <h1>Chat #<%= @chat.id %></h1>
+    <p><strong>Game:</strong> <%= @game.name %></p>
+
+    <%= link_to "Back to chats", chats_path, class: "btn btn-secondary mt-3" %>
+  </div>
+</div>
