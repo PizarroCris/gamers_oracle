@@ -15,7 +15,6 @@ class ChatsController < ApplicationController
   def show
     @chat = Chat.includes(:messages).find(params[:id])
     @message = Message.new
-
     if Rails.env.development?
       @input_tokens = @chat.messages.pluck(:input_tokens).compact.sum
       @output_tokens = @chat.messages.pluck(:output_tokens).compact.sum
@@ -31,7 +30,8 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = current_user.chats.new(chat_params)
+    @chat = current_user.chats.new
+    @chat.game = Game.find params[:chat][:game_id]
     if @chat.save
       redirect_to @chat, notice: "Chat created"
     else

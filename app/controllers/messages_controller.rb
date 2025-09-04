@@ -8,26 +8,31 @@ class MessagesController < ApplicationController
   PROMPT
 
   def create
-    @message = @chat.messages.new(message_params)
+    @message = Message.new(message_params)
+    @message.chat = @chat
     @message.role = "user"
-
     if @message.valid?
-      response = @chat.with_instructions(SYSTEM_PROMPT).ask(@message.message)
-      @chat.messages.create(role: "assistant", message: response.message)
+      @chat.with_instructions(instructions(@chat.game.name)).ask(@message.content)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
+      @chat.reload
       render "chats/show", status: :unprocessable_entity
     end
   end
 
   private
 
+  def instructions(game)
+    [SYSTEM_PROMPT, "the game is #{game}"]
+    .compact.join("\n\n")
+  end
+
   def set_chat
     @chat = Chat.find(params[:chat_id])
   end
 
   def message_params
-    params.require(:message).permit(:message)
+    params.require(:message).permit(:content)
   end
 end
