@@ -5,11 +5,11 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
 
-  resources :chats do
-    resources :messages, only: [:new, :create]
+  resources :games do
+    resources :chats
   end
 
-  resources :games do
-    resources :chats, only: [:index, :create]
+  resources :chats do
+    resources :messages, only: [:create]
   end
 end

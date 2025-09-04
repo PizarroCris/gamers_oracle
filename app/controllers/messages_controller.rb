@@ -3,40 +3,21 @@ class MessagesController < ApplicationController
 
   SYSTEM_PROMPT = <<~PROMPT
     You are a helpful assistant for gamers called Gamer's Oracle!
-
-    Help the user explore knowledge, strategies, secrets, and curiosities about the game related to this chat.
-
+    You only help the user in the game of his choise! One per chat only!
+    Answer in the same language as the user.
   PROMPT
 
   def create
-    user_message = params[:message].to_s.strip
-    if user_message.blank?
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.update("messages_alert", "Type a message first.") }
-        format.html { redirect_to chat_path(@chat), alert: "Type a message first." }
-      end
-      return
-    end
+    @message = @chat.messages.new(message_params)
+    @message.role = "user"
 
-    @chat.messages.create!(role: "user", message: user_message)
-
-    prompt_with_language = SYSTEM_PROMPT + "\nRespond in #{I18n.locale}."
-
-    begin
-      chat_ai = RubyLLM.chat
-      response = chat_ai.with_instructions(prompt_with_language).ask(user_message)
-      ai_response = response.content.presence || "I couldn't generate a reply."
-      @chat.messages.create!(role: "assistant", message: ai_response)
-    rescue RubyLLM::RateLimitError
-      flash.now[:alert] = "AI quota exceeded. Please try again later."
-    rescue => e
-      Rails.logger.error("Messages#create AI error: #{e.class} - #{e.message}")
-      flash.now[:alert] = "AI error: #{e.message}"
-    end
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to chat_path(@chat) }
+    if @message.valid?
+      response = @chat.with_instructions(SYSTEM_PROMPT).ask(@message.message)
+      @chat.messages.create(role: "assistant", message: response.message)
+      @chat.generate_title_from_first_message
+      redirect_to chat_path(@chat)
+    else
+      render "chats/show", status: :unprocessable_entity
     end
   end
 
@@ -44,5 +25,9 @@ class MessagesController < ApplicationController
 
   def set_chat
     @chat = Chat.find(params[:chat_id])
+  end
+
+  def message_params
+    params.require(:message).permit(:message)
   end
 end
