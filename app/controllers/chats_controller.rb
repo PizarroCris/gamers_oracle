@@ -7,12 +7,13 @@ class ChatsController < ApplicationController
   end
 
   def show
-    @game     = @chat.game
+    @game = @chat.game
     @messages = @chat.messages.order(:created_at)
   end
 
   def new
     @chat = Chat.new
+    @available_games = Game.left_outer_joins(:chats).where(chats: { id: nil })
   end
 
   def create
