@@ -62,5 +62,4 @@ class ChatsController < ApplicationController
   def chat_params
     params.require(:chat).permit(:game_id)
   end
-
 end
