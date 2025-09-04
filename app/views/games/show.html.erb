@@ -1,17 +1,21 @@
 <div id="banner_show" class="position-relative" style="background-image: url('<%= cl_image_path @game.image.key %>')">
-  <div class="overlay"><h1 class="fw-bolder"><%= @game.name %></h1></div>
+  <div class="overlay">
+    <h1 class="fw-bolder"><%= @game.name %></h1>
+  </div>
 </div>
 
 <div class="container mt-4">
   <div class="card bg-secondary p-4 game-card">
+
     <% if @chats.any? %>
       <div class="row d-flex align-items-center justify-content-center">
         <% @chats.each do |chat| %>
           <div>
             <div class="card shadow-sm">
               <div class="card-body list-chats d-flex align-items-center justify-content-center">
-                <%= link_to "Chat with Oracle", chat_path(chat),
-                    class: "text-center chat-card-text fw-bold text-decoration-none text-center" %>
+                <%= link_to "Chat with Oracle",
+                            chat_path(chat),
+                            class: "text-center chat-card-text fw-bold text-decoration-none text-center" %>
               </div>
             </div>
           </div>
@@ -24,15 +28,12 @@
     <% end %>
 
     <div class="d-flex justify-content-between align-items-center mt-3">
-      <%= link_to "Edit Game",
-              edit_game_path(@game),
-              class: "btn-brown" %>
+      <%= link_to "Edit Game", edit_game_path(@game), class: "btn-brown" %>
       <%= link_to "Delete Game",
-                game_path(@game),
-                method: :delete,
-                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                class: "btn-brown" %>
+                  game_path(@game),
+                  data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                  class: "btn-brown" %>
     </div>
+
   </div>
-  <%= submit_tag "Send", class: "btn btn-primary" %>
-<% end %>
+</div>
