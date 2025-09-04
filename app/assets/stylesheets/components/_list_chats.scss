@@ -1,14 +1,16 @@
 .list-chats {
-  background-color: #44444E;
+  background-color: #ffffff;
+  border-radius: 4px;
 }
 
 .list-chats:hover {
-  background-color: #44444E;
+  background-color: #715A5A;
   opacity: 75%;
 }
 
 .chat-card-text {
-  color: white;
+  color: rgb(0, 0, 0);
+  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
 }
 
 .chat-card-text:hover {
