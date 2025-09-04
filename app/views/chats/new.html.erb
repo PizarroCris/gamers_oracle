@@ -4,9 +4,17 @@
       <div class="card shadow-sm p-4 chat-container">
         <h1 class="h4 mb-4 text-center">Start a new chat</h1>
         <%= simple_form_for @chat do |f| %>
-          <%= f.association :game, label: "Choose a game" %>
+          <% if @available_games.any? %>
+            <%= f.association :game, collection: @available_games, label: "Choose a game" %>
+          <% else %>
+            <p class="text-muted">All games already have chats.</p>
+          <% end %>
           <div class="text-center mt-3">
-            <%= f.button :submit, "Start Chat", class: "btn btn-brown" %>
+            <% if @available_games.any? %>
+              <%= f.button :submit, "Start Chat", class: "btn btn-brown" %>
+            <% else %>
+              <%= link_to "Back", chats_path, class: 'btn-brown' %>
+            <% end %>
           </div>
         <% end %>
       </div>

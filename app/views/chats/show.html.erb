@@ -1,44 +1,28 @@
-<div class="container mt-5">
-  <div class="card shadow-sm p-4 game-card position-relative">
+<div class="chat-container">
 
-    <!-- Delete button -->
-    <div class="position-absolute top-0 end-0 m-3">
-      <%= button_to "Delete Chat",
-                    chat_path(@chat),
-                    method: :delete,
-                    data: { turbo_confirm: "Are you sure?" },
-                    class: "btn btn-danger btn-sm" %>
-    </div>
+  <div class="chat-header">
+    <h2><%= @game.name %> - Chat #<%= @chat.id %></h2>
+    <%= link_to "Delete Chat",
+                chat_path(@chat),
+                method: :delete,
+                data: { turbo_confirm: "Are you sure?" },
+                class: "btn-brown" %>
+    <%= link_to "Back to chats", chats_path, class: "btn-brown ml-2" %>
+  </div>
 
-    <h1>Chat #<%= @chat.id %></h1>
-    <p><strong>Game:</strong> <%= @game.name %></p>
-
-    <%= link_to "Back to chats", chats_path, class: "btn btn-secondary mt-3" %>
-
-    <!-- Robot form inside the card -->
-    <hr class="my-4">
-    <h3 class="h5 mb-3">Ask the Robot</h3>
-
-    <%= form_with url: ask_ai_chat_path(@chat), method: :post, local: true do %>
-      <div class="input-group">
-        <%= text_field_tag :message, nil, class: "form-control", placeholder: "Ask the AI..." %>
-        <button class="btn btn-primary" type="submit">Send</button>
+  <div id="messages_list" class="chat-messages">
+    <% @chat.messages.order(:created_at).each do |msg| %>
+      <div class="chat-message <%= msg.role == 'user' ? 'user-message' : 'ai-message' %>">
+        <%= msg.message %>
       </div>
     <% end %>
-
-    <!-- Minimal messages list -->
-    <div class="mt-4">
-      <h4 class="h6">Messages</h4>
-      <% if @chat.messages.any? %>
-        <% @chat.messages.order(:created_at).each do |msg| %>
-          <p class="mb-2">
-            <strong><%= msg.role.capitalize %>:</strong>
-            <%= msg.message %>
-          </p>
-        <% end %>
-      <% else %>
-        <p class="text-muted mb-0">No messages yet. Ask something above.</p>
-      <% end %>
-    </div>
   </div>
+
+  <div class="chat-input">
+    <%= form_with url: chat_messages_path(@chat), method: :post, local: false, data: { turbo: true }, id: "new_message_form" do %>
+      <input type="text" name="message" placeholder="Ask the AI..." autocomplete="off" class="message-field">
+      <i class="fa-solid fa-paper-plane" type="submit"></i>
+    <% end %>
+  </div>
+
 </div>
