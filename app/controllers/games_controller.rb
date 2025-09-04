@@ -5,8 +5,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
-    @chats = @game.chats
+    @chats = @game.chats.includes(:messages)
+    @message = Message.new
   end
 
   def new

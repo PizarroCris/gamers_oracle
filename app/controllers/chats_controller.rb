@@ -1,14 +1,27 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_chat, only: [:show, :destroy, :ask_ai]
 
   def index
-    @chats = current_user.chats.order(created_at: :desc)
+    if params[:game_id].present?
+      @game = Game.find(params[:game_id])
+      @chats = current_user.chats.where(game: @game)
+    else
+      @chats = current_user.chats.all
+      @game = nil
+    end
+    @chat = Chat.new
   end
 
   def show
-    @game = @chat.game
-    @messages = @chat.messages.order(:created_at)
+    @chat = Chat.includes(:messages).find(params[:id])
+    @message = Message.new
+    if Rails.env.development?
+      @input_tokens = @chat.messages.pluck(:input_tokens).compact.sum
+      @output_tokens = @chat.messages.pluck(:output_tokens).compact.sum
+
+      last_model_id = @chat.messages.last&.model_id
+      @context_window = last_model_id ? RubyLLM.models.find(last_model_id).context_window : nil
+    end
   end
 
   def new
@@ -17,7 +30,8 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = current_user.chats.new(chat_params)
+    @chat = current_user.chats.new
+    @chat.game = Game.find params[:chat][:game_id]
     if @chat.save
       redirect_to @chat, notice: "Chat created"
     else
@@ -28,39 +42,5 @@ class ChatsController < ApplicationController
   def destroy
     @chat.destroy
     redirect_to chats_path, notice: "Chat deleted"
-  end
-
-  SYSTEM_PROMPT = "You are a helpful assistant for gamers."
-
-  def ask_ai
-    user_msg = params[:message].to_s.strip
-    return redirect_to chat_path(@chat), alert: "Type a message first." if user_msg.blank?
-
-
-    @chat.messages.create!(role: "user", message: user_msg)
-
-    chat = RubyLLM.chat
-    response = chat.with_instructions(SYSTEM_PROMPT).ask(user_msg)
-
-    ai = response.content.presence || "I couldn't generate a reply."
-
-    @chat.messages.create!(role: "assistant", message: ai)
-
-    redirect_to chat_path(@chat)
-  rescue RubyLLM::RateLimitError
-    redirect_to chat_path(@chat), alert: "AI quota exceeded. Please try again later."
-  rescue => e
-    Rails.logger.error("ask_ai error: #{e.class}: #{e.message}")
-    redirect_to chat_path(@chat), alert: "Robot error: #{e.message}"
-  end
-
-  private
-
-  def set_chat
-    @chat = current_user.chats.find(params[:id])
-  end
-
-  def chat_params
-    params.require(:chat).permit(:game_id)
   end
 end

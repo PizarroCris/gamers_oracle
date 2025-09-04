@@ -1,28 +1,36 @@
-<div class="chat-container">
+<%= link_to "← Back", games_path %> / <%= @chat.game.name %>
 
-  <div class="chat-header">
-    <h2><%= @game.name %> - Chat #<%= @chat.id %></h2>
-    <%= link_to "Delete Chat",
-                chat_path(@chat),
-                method: :delete,
-                data: { turbo_confirm: "Are you sure?" },
-                class: "btn-brown" %>
-    <%= link_to "Back to chats", chats_path, class: "btn-brown ml-2" %>
-  </div>
+<div id="chat_title">
+  <h1><%= @chat.title %></h1>
+</div>
 
-  <div id="messages_list" class="chat-messages">
-    <% @chat.messages.order(:created_at).each do |msg| %>
-      <div class="chat-message <%= msg.role == 'user' ? 'user-message' : 'ai-message' %>">
-        <%= msg.message %>
+<% if Rails.env.test? %>
+  <span class="float-end">
+    Input tokens: <%= @input_tokens %> / Output tokens: <%= @output_tokens %> / Context window: <%= @context_window %>
+  </span>
+<% end %>
+
+<div id="messages" class="mb-4">
+  <% @chat.messages.each do |message| %>
+    <% if message.role == "user" %>
+      <div class="d-flex justify-content-end mb-2">
+        <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
+          <%= raw(render_markdown(message.content)) %>
+        </div>
+      </div>
+    <% elsif message.role == "assistant" %>
+      <div class="d-flex justify-content-start mb-5">
+        <div class="px-3 pb-0 pt-3 bg-light rounded-pill">
+          <%= raw(render_markdown(message.content)) %>
+        </div>
       </div>
     <% end %>
-  </div>
+  <% end %>
+</div>
 
-  <div class="chat-input">
-    <%= form_with url: chat_messages_path(@chat), method: :post, local: false, data: { turbo: true }, id: "new_message_form" do %>
-      <input type="text" name="message" placeholder="Ask the AI..." autocomplete="off" class="message-field">
-      <i class="fa-solid fa-paper-plane" type="submit"></i>
-    <% end %>
-  </div>
-
+<div id="new_message">
+  <%= simple_form_for [@chat, @message] do |f| %>
+    <%= f.input :content %>
+    <%= f.submit "Enviar", class: "btn btn-primary mt-2" %>
+  <% end %>
 </div>
