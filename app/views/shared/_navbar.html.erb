@@ -11,14 +11,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "/", class: "nav-link" %>
-          </li>
           <li class="nav-item">
           </li>
           <li class="nav-item dropdown">
           <a href="#" class="icon h-100 text-decoration-none d-flex align-items-center" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <i class="fa-solid fa-bars"></i>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Games", "../games", class: "dropdown-item" %>
