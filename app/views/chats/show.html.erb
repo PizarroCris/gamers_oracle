@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="card shadow-sm p-4 game-card position-relative">
 
-    <!-- Delete button in top right -->
+    <!-- Delete button -->
     <div class="position-absolute top-0 end-0 m-3">
       <%= button_to "Delete Chat",
                     chat_path(@chat),
@@ -19,9 +19,9 @@
     <hr class="my-4">
     <h3 class="h5 mb-3">Ask the Robot</h3>
 
-    <%= form_with url: ask_ai_chat_path(@chat), method: :post, local: true do |f| %>
+    <%= form_with url: ask_ai_chat_path(@chat), method: :post, local: true do %>
       <div class="input-group">
-        <%= f.text_field :message, class: "form-control", placeholder: "Ask the AI..." %>
+        <%= text_field_tag :message, nil, class: "form-control", placeholder: "Ask the AI..." %>
         <button class="btn btn-primary" type="submit">Send</button>
       </div>
     <% end %>
@@ -32,8 +32,8 @@
       <% if @chat.messages.any? %>
         <% @chat.messages.order(:created_at).each do |msg| %>
           <p class="mb-2">
-            <strong><%= message.role.capitalize %>:</strong>
-            <%= message.content %>
+            <strong><%= msg.role.capitalize %>:</strong>
+            <%= msg.message %>
           </p>
         <% end %>
       <% else %>
