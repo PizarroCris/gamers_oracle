@@ -8,12 +8,12 @@
           <div data-controller="image-game" class="d-flex align-items-center mb-3">
             <%= f.input :image, as: :file, input_html: { id: "upload-image", class: "d-none", data: { "image-game-target" => "fileInput" } }, label: false %>
             <label for="upload-image" class="btn btn-outline-secondary me-2">
-              <i class="fas fa-upload"></i> Escolher imagem
+              <i class="fas fa-upload"></i> Choose Image
             </label>
-            <span data-image-game-target="fileNameDisplay">Selecione um Arquivo</span>
+            <span data-image-game-target="fileNameDisplay">Select file</span>
           </div>
         </div>
-        <div class="form-actions">
+        <div class="form-actions d-flex flex-column">
           <%= f.button :submit, "Create", class: "my-3 btn btn-outline-secondary"%>
         </div>
       <% end %>
