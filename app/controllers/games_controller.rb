@@ -22,10 +22,9 @@ class GamesController < ApplicationController
     end
   end
 
-   def edit
+  def edit
     @game
-    end
-
+  end
   def update
     if @game.update(game_params)
       redirect_to @game, notice: "Game updated"
