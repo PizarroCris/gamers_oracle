@@ -6,19 +6,13 @@
   <h1><%= @chat.title %></h1>
 </div>
 
-<% if Rails.env.test? %>
-  <span class="float-end">
-    Input tokens: <%= @input_tokens %> / Output tokens: <%= @output_tokens %> / Context window: <%= @context_window %>
-  </span>
-<% end %>
-
 <div id="messages" class="mb-4">
   <%= render "messages/messages", messages: @chat.messages %>
 </div>
 
 <div id="new_message">
   <%= simple_form_for [@chat, @message] do |f| %>
-    <%= f.input :content %>
+    <%= f.input :content, as: :string %>
     <%= f.submit "Enviar", class: "btn btn-primary mt-2" %>
   <% end %>
 </div>

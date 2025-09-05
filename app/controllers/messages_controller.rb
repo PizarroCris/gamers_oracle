@@ -12,7 +12,14 @@ class MessagesController < ApplicationController
     @message.chat = @chat
     @message.role = "user"
     if @message.valid?
-      @chat.with_instructions(instructions(@chat.game.name)).ask(@message.content)
+      @chat.with_instructions(instructions(@chat.game.name)).ask(@message.content) do |chunk|
+        next if chunk.content.blank? # skip empty chunks
+
+        message = @chat.messages.last
+        message.content += chunk.content
+        broadcast_replace(message)
+      end
+      broadcast_replace(@chat.messages.last)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
@@ -26,6 +33,10 @@ class MessagesController < ApplicationController
   def instructions(game)
     [SYSTEM_PROMPT, "the game is #{game}"]
     .compact.join("\n\n")
+  end
+
+  def broadcast_replace(message)
+    Turbo::StreamsChannel.broadcast_replace_to(@chat, target: helpers.dom_id(message), partial: "messages/message", locals: { message: message })
   end
 
   def set_chat
