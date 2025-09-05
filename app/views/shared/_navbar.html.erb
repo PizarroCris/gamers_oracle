@@ -9,31 +9,31 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav me-auto gap-3">
         <% if user_signed_in? %>
+          <%= link_to "Games", games_path, class:"link #{'active' if current_page?(games_path)}" %>
+          <%= link_to "Chats", chats_path, class:"link #{'active' if current_page?(chats_path)}" %>
           <li class="nav-item">
           </li>
           <li class="nav-item dropdown">
           <a href="#" class="icon h-100 text-decoration-none d-flex align-items-center" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa-solid fa-bars"></i>
           </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Games", "../games", class: "dropdown-item" %>
-              <%= link_to "Chats", "../chats", class: "dropdown-item" %>
+            <div id="drop" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>
         <% else %>
-          <li class="nav-item">
+          <li class="nav-item gap-3">
           <% if controller_name == "registrations" %>
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Login", new_user_session_path, class:"link"  %>
           <% elsif controller_name == "pages" %>
-            <div class="d-flex">
-              <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-              <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
+            <div class="d-flex gap-3">
+              <%= link_to "Login", new_user_session_path, class:"link"  %>
+              <%= link_to "Sign Up", new_user_registration_path, class:"link"  %>
             </div>
           <% else %>
-            <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
+            <%= link_to "Sign Up", new_user_registration_path, class:"link"  %>
           <% end %>
           </li>
         <% end %>
