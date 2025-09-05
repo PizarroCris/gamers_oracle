@@ -15,13 +15,7 @@ class ChatsController < ApplicationController
   def show
     @chat = Chat.includes(:messages).find(params[:id])
     @message = Message.new
-    if Rails.env.development?
-      @input_tokens = @chat.messages.pluck(:input_tokens).compact.sum
-      @output_tokens = @chat.messages.pluck(:output_tokens).compact.sum
 
-      last_model_id = @chat.messages.last&.model_id
-      @context_window = last_model_id ? RubyLLM.models.find(last_model_id).context_window : nil
-    end
   end
 
   def new
