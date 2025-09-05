@@ -4,3 +4,55 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+
+body.light-mode {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+body.light-mode .container-box {
+  background-color: #f8f9fa;
+}
+
+body.light-mode .input-chat {
+  background-color: white;
+  color: #212529;
+  border: 1px solid #ccc;
+}
+
+body.light-mode .input-chat::placeholder {
+  color: #999;
+}
+
+body.light-mode .btn-send {
+  background-color: #007bff;
+  color: white;
+}
+
+body.light-mode .chat-input-area {
+  background-color: #f8f9fa;
+}
+
+body.light-mode .balon {
+  background-color: #17a2b8;
+  color: white;
+}
+
+body.light-mode #chat_title_text {
+  color: #212529 !important;
+}
+
+body.light-mode .d-flex.justify-content-start > div {
+  color: #212529 !important;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
+
+body.light-mode .balon {
+  background-color: #17a2b8;
+  color: white;
+}
+
+body.light-mode .d-flex.justify-content-end > .balon {
+  color: white;
+}

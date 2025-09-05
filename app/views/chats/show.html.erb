@@ -1,18 +1,26 @@
 <%= turbo_stream_from @chat %>
 
-<%= link_to "← Back", games_path %> / <%= @chat.game.name %>
+<div class="container container-box py-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 id="chat_title_text" class="ps-3 text-white"><%= @chat.title %></h1>
+    <button id="toggle-theme" class="btn btn-sm ms-3">💡</button>
+  </div>
 
-<div id="chat_title">
-  <h1><%= @chat.title %></h1>
-</div>
+  <div id="messages" class="mb-4">
+    <%= render "messages/messages", messages: @chat.messages %>
+  </div>
 
-<div id="messages" class="mb-4">
-  <%= render "messages/messages", messages: @chat.messages %>
-</div>
-
-<div id="new_message">
-  <%= simple_form_for [@chat, @message] do |f| %>
-    <%= f.input :content, as: :string %>
-    <%= f.submit "Enviar", class: "btn btn-primary mt-2" %>
-  <% end %>
+  <div class="container chat-input-area fixed-bottom pb-3 px-3">
+    <%= simple_form_for [@chat, @message] do |f| %>
+      <div class="position-relative">
+        <%= f.input :content, as: :string, label: false, placeholder: "Type here...",
+              wrapper: false,
+              input_html: { class: "input-chat form-control rounded-pill p-3 pe-5" } %>
+        <button type="submit" 
+                class="bg-secondary rounded-pill btn-send">
+          <i class="fa-solid text-white fa-paper-plane"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
 </div>
