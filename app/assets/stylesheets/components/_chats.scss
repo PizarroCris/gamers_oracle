@@ -1,3 +1,12 @@
 .chat-container {
   background-color: #D3DAD9;
 }
+
+.chat-container.empty {
+  padding: 1.5rem;
+  max-height: 220px;  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
