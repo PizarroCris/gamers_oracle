@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
     @message.role = "user"
     if @message.valid?
       @chat.with_instructions(instructions(@chat.game.name)).ask(@message.content) do |chunk|
-        next if chunk.content.blank? # skip empty chunks
+        next if chunk.content.blank?
 
         message = @chat.messages.last
         message.content += chunk.content
