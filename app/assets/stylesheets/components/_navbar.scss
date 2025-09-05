@@ -1,6 +1,6 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
+  background: #000;
   height: 56px;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .navbar {
-  background-color: #202020;
+  background-color: #000000;
 }
 
 .nav-link {
@@ -22,4 +22,30 @@
 
 .nav-link:hover {
   color: #44444E;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.link.active {
+  text-decoration: underline;
+}
+
+#drop {
+  background-color: #000000;
+  border-radius: 4px;
+}
+
+#drop .dropdown-item {
+  color:white;
+}
+
+#drop .dropdown-item:hover{
+  color: #000;
 }
