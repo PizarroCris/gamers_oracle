@@ -1,43 +1,39 @@
-<div class="navbar navbar-expand-sm navbar-lewagon">
-  <div class="container container-fluid">
+<nav class="navbar navbar-expand-sm navbar-lewagon navbar-dark">
+  <div class="container-fluid">
     <%= link_to "/", class: "navbar-brand" do %>
       <%= image_tag "logo.png" %>
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <i class="fa-solid fa-bars" style="color: white;"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto gap-3">
+      <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
-          <%= link_to "Games", games_path, class:"link #{'active' if current_page?(games_path)}" %>
-          <%= link_to "Chats", chats_path, class:"link #{'active' if current_page?(chats_path)}" %>
           <li class="nav-item">
+            <%= link_to "Games", games_path, class: "nav-link #{'active' if current_page?(games_path)}" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Chats", chats_path, class: "nav-link #{'active' if current_page?(chats_path)}" %>
           </li>
           <li class="nav-item dropdown">
-          <a href="#" class="icon h-100 text-decoration-none d-flex align-items-center" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa-solid fa-bars"></i>
-          </a>
+            <a href="#" class="nav-link" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-user"></i>
+            </a>
             <div id="drop" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>
         <% else %>
-          <li class="nav-item gap-3">
-          <% if controller_name == "registrations" %>
-            <%= link_to "Login", new_user_session_path, class:"link"  %>
-          <% elsif controller_name == "pages" %>
-            <div class="d-flex gap-3">
-              <%= link_to "Login", new_user_session_path, class:"link"  %>
-              <%= link_to "Sign Up", new_user_registration_path, class:"link"  %>
-            </div>
-          <% else %>
-            <%= link_to "Sign Up", new_user_registration_path, class:"link"  %>
-          <% end %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
     </div>
   </div>
-</div>
+</nav>
