@@ -1,12 +1,8 @@
-<div id="banner_home">
-  <div class="overlay">
-    <div class="container hero-buttons">
-      <% unless user_signed_in? %>
-        <%= link_to "Log In", new_user_session_path, class: "btn-brown" %>
-        <%= link_to "Register", new_user_registration_path, class: "btn-brown" %>
-      <% end %>
-    </div>
+<div class="home-banner">
+  <div class="banner-content">
     <h1>Gamer's Oracle</h1>
-    <h3>The Ultimate Game Guru</h3>
+    <p class="lead">AI-POWERED GUIDES FOR EVERY GAME</p>
+    <hr>
+    <%= link_to "START", new_user_registration_path, class: "btn-home" %>
   </div>
 </div>
