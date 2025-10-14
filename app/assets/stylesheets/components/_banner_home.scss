@@ -1,44 +1,49 @@
-#banner_home {
-  background-image: image-url("Banner_Home.jpg");
+.home-banner {
+  background-image: url('Banner_Home.jpg');
+
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: calc(100vh - 56px);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
 
-#banner_home .overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 40px 20px;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   color: white;
-  width: 100%;
+  overflow: hidden;
 }
 
-#banner_home .overlay .hero-buttons {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 2rem;
-  margin-bottom: 20px;
+.banner-content {
+  background-color: rgba(10, 20, 35, 0.9);
+  padding: 40px 60px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 225, 255, 1);
+  box-shadow: inset 0 0 10px rgba(0, 225, 255, 0.7),
+    0 0 25px rgba(0, 225, 255, 0.6),
+    0 0 8px rgba(0, 225, 255, 0.8);
+  
 }
 
-#banner_home h1 {
+.banner-content h1 {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.btn-home {
+  text-decoration: none;
   color: #fff;
-  font-size: 45px;
-  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
-}
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 225, 255, 0.817);
+  box-shadow: inset 0 0 10px rgba(0, 225, 255, 0.7),
+    0 0 25px rgba(0, 225, 255, 0.6),
+    0 0 8px rgba(0, 225, 255, 0.8);
 
-#banner_home h3 {
-  color: #fff;
-  font-size: 30px;
-  text-shadow: 5px 5px 10px rgba(245, 243, 243, 0.3);
+  &:hover {
+  color: rgb(191, 191, 191);
+  border: 1px solid rgba(0, 225, 255, 0.517);
+  box-shadow: inset 0 0 10px rgba(25, 157, 175, 0.7),
+    0 0 25px rgba(80, 155, 165, 0.6),
+    0 0 8px rgba(62, 131, 141, 0.8);
+  }
 }
-
