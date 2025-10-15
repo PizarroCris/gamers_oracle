@@ -1,0 +1,18 @@
+# fly.toml
+
+# Define o nome da tua aplicação na Fly.io
+app = "gamers-oracle"
+primary_region = "ams"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0 # Importante para o plano gratuito (a app "adormece")
+  processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256 # A memória do plano gratuito
