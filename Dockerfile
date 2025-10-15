@@ -11,15 +11,14 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
-
+    BUNDLE_WITHOUT="development:test"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages needed to build gems
+# MUDANÇA AQUI: Adiciona nodejs e npm a ESTA linha, no estágio de build
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config nodejs npm
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -40,9 +39,9 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Final stage for app image
 FROM base
 
-# Install packages needed for deployment
+# Instala APENAS os pacotes necessários para CORRER a app (não para a construir)
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config nodejs npm
+    apt-get install --no-install-recommends -y curl libvips postgresql-client
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
