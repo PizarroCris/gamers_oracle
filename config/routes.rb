@@ -3,8 +3,11 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  root to: "pages#home"
-
+  root "pages#home_redirect"
+  
+  get "/home", to: "pages#home"
+  get "/landing", to: "pages#landing"
+  
   resources :games do
     resources :chats
   end
