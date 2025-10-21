@@ -1,0 +1,35 @@
+<div class="bg">
+  <div class="home-banner d-flex flex-column">
+    <div class="banner-content mt-5 mb-3 w-75">
+      <h1>Welcome to Gamer's Oracle</h1>
+      <p class="lead">Choose your game and start a chat!</p>
+      <hr>
+      <div class="home-actions d-flex gap-3">
+        <%= link_to "New Game", new_game_path, class: "btn-home w-50" %>
+        <%= link_to "New Chat", new_chat_path, class: "btn-home w-50" %>
+      </div>
+    </div>
+    <div class="banner-content m-3 w-75">
+      <h2>Recent Games</h2>
+      <hr>
+      <div class="bg-new mt-1">
+        <div class="container text-below-banner py-4">
+          <div class="row">
+            <% @games.each do |game| %>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <%= link_to game_path(game), class: "text-decoration-none text-dark" do %>
+                  <div class="game-card-index card h-100 shadow-sm text-center">
+                    <%= cl_image_tag game.image.key, width: 300, height: 200, crop: :fill, class: "card-img-top" %>
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                      <span class="text-black chat-card-text fw-bold d-block mt-2a"><%= game.name %></span>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
