@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15.3-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gamers_oracle_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  web:
+    build: . 
+    image: gamers-oracle:latest
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - .:/rails 
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - db
+    environment:
+      CLOUDINARY_URL: ${CLOUDINARY_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+
+      RAILS_ENV: development
+      DATABASE_URL: postgres://postgres:password@db/gamers_oracle_development
+      RACK_ENV: development
+
+    command: ./bin/rails server -b 0.0.0.0
+    
+volumes:
+  postgres_data:
+  bundle_cache:

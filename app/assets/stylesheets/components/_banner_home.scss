@@ -1,16 +1,35 @@
-.home-banner {
+.bg {
   background-image: url('home-background.jpg');
-
   background-size: cover;
   background-position: center;
 
-  height: 91vh;
+  width: 100vw;
+  height: 100vh;
+
+  min-width: 100%;
+  min-height: 100%; 
+}
+
+.bg-home {
+  background-image: url('home-background.jpg');
+  background-size: cover;
+  background-position: center;
+
+  width: 100vw;
+  height: 92vh;
+  overflow: hidden;
+}
+
+.home-banner {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   color: white;
-  overflow: hidden;
+}
+
+.home-banner.align-items-center {
+  padding-top: 60px;
 }
 
 .banner-content {
