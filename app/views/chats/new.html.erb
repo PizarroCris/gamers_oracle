@@ -1,19 +1,26 @@
 <div class="mt-5">
   <div class="row justify-content-center">
     <div class="col-10 col-sm-8 col-md-6">
-      <div class="card shadow-sm p-4 chat-container <%= 'empty 'unless @available_games.any? %>">
-        <h2 class="m-3 text-center">Start a new chat</h1>
+      
+      <div class="banner-content p-4 <%= 'empty 'unless @available_games.any? %>">
+        
+        <h2 class="m-3 text-center text-white">Start a new chat</h2>
+        
         <%= simple_form_for @chat do |f| %>
           <% if @available_games.any? %>
-            <%= f.association :game, collection: @available_games, label: "Choose a game" %>
+            <%= f.association :game, 
+                              collection: @available_games, 
+                              label: "Choose a game", 
+                              label_html: { class: "text-white" },
+                              input_html: { class: "form-select" } %>
           <% else %>
-            <p class="text-muted">All games already have chats.</p>
+            <p class="text-center text-white">All games already have chats.</p>
           <% end %>
           <div class="text-center mt-3">
             <% if @available_games.any? %>
-              <%= f.button :submit, "Start Chat", class: "btn btn-brown" %>
+              <%= f.button :submit, "Start Chat", class: "btn btn-home" %>
             <% else %>
-              <%= link_to "Back", chats_path, class: 'btn-brown' %>
+              <%= link_to "Back", chats_path, class: 'btn-home' %>
             <% end %>
           </div>
         <% end %>
